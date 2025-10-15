@@ -39,6 +39,22 @@ FROM (
 ) AS ranked_products
 WHERE rank_products <= 5;
 
+-- CTE
+WITH ranked_products AS (
+    SELECT 
+        p.product_name,
+        SUM(sales_amount) as total_revenue,
+        RANK() OVER (ORDER BY SUM(sales_amount) DESC) rank_revenue
+    FROM gold.fact_sales f
+    LEFT JOIN gold.dim_products p
+    ON f.product_key = p.product_key
+    GROUP BY p.product_name
+) 
+SELECT *
+FROM ranked_products
+WHERE rank_revenue <= 5 
+
+
 -- What are the 5 worst-performing products in terms of sales?
 SELECT TOP 5
     p.product_name,
@@ -62,7 +78,7 @@ GROUP BY first_name, last_name
 ORDER BY total_spend DESC
 
 SELECT *
-FROM gold.dim_customers
+FROM gold.dim_products
 
 -- The 3 customers with the fewest orders placed
 SELECT TOP 3
@@ -73,4 +89,3 @@ LEFT JOIN gold.dim_customers c
 ON f.customer_key = c.customer_key
 GROUP BY first_name, last_name
 ORDER BY total_orders 
-
