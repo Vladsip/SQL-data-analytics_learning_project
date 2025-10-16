@@ -23,7 +23,7 @@ Each script is modular and demonstrates **best practices in SQL** for data analy
  
 ##  Repository Structure
 
-scripts/   
+[scripts](https://github.com/Vladsip/SQL-data-analytics_learning_project/tree/main/scripts)   
 ├── 01_dimensions_exploration.sql  
 ├── 02_date_range_exploration.sql  
 ├── 03_measures_exploration.sql  
